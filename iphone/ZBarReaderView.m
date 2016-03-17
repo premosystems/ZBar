@@ -573,24 +573,36 @@ static inline CGFloat rotationForInterfaceOrientation (int orient)
 
 - (void) didTrackSymbols: (ZBarSymbolSet*) syms
 {
-    if(!tracksSymbols)
-        return;
-
-    int n = syms.count;
-    assert(n);
-    if(!n)
-        return;
-
     ZBarSymbol *sym = nil;
-    for(ZBarSymbol *s in syms)
-        if(!sym || s.type == ZBAR_QRCODE || s.quality > sym.quality)
-            sym = s;
-    assert(sym);
-    if(!sym)
-        return;
-
-    [self updateTracking: tracking
-          withSymbol: sym];
+    
+    @try {
+        if(!tracksSymbols)
+            return;
+        
+        int n = syms.count;
+        assert(n);
+        if(!n)
+            return;
+        
+        
+        for(ZBarSymbol *s in syms)
+            if(!sym || s.type == ZBAR_QRCODE || s.quality > sym.quality)
+                sym = s;
+        assert(sym);
+        if(!sym)
+            return;
+        
+        [self updateTracking: tracking
+                  withSymbol: sym];
+    }
+    @catch (NSException *exception) {
+        
+        
+    }
+    @finally {
+        
+    }
+    
 }
 
 @end
