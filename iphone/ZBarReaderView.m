@@ -597,6 +597,10 @@ static inline CGFloat rotationForInterfaceOrientation (int orient)
     }
     @catch (NSException *exception) {
         
+#ifdef DEBUG
+      NSLog(@"scan exception: %@",exception);
+#endif
+        
         
     }
     @finally {
